@@ -1,0 +1,35 @@
+{
+    "name": "revosystems/sage-one",
+    "description": "Api to integrate with Sage One.",
+    "type": "library",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+     "repositories": [
+        {
+            "type" : "path",
+            "url"  : "../sage-api",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+   "require": {
+        "php": ">=5.6.4",
+        "revosystems/sage-api": "@dev"
+    },
+    "require-dev": {
+        "vlucas/phpdotenv": "^2.4",
+        "phpunit/phpunit": "~5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "RevoSystems\\SageOne\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable"
+}
