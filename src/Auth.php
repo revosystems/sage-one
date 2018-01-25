@@ -28,7 +28,7 @@ class Auth extends \RevoSystems\SageApi\Auth
     {
         $this->country = request('country');
         $this->setTokenUrl();
-        parent::loginCallback($redirect_uri, $code);
+        return parent::loginCallback($redirect_uri, $code);
     }
 
     public function getAuthHeaders()
