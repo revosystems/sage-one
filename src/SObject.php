@@ -2,7 +2,6 @@
 
 namespace RevoSystems\SageOne;
 
-use RevoSystems\SageOne\SObjects\Dimension;
 use RevoSystems\SageOne\Validators\Validator;
 use RevoSystems\SageApi\Api;
 
