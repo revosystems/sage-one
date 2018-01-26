@@ -23,6 +23,7 @@ class SObject
     public function __construct(Api $api, $json = null)
     {
         $this->api        = $api;
+        $this->id         = $json['id'] ?? $this->id;
         $this->attributes = collect($json);
         $this->fields     = collect($this->fields);
     }
@@ -38,32 +39,32 @@ class SObject
 
     public function validate($attributes = false, $withRequired = true)
     {
-        return (new Validator($this->fields, $attributes ? : $this->attributes))->validate($withRequired);
+        return [$this->tag["UID"] => (new Validator($this->fields, $attributes ? : $this->attributes))->validate($withRequired)->toArray()];
     }
 
-    public function all($fields = ["Id", "Name"])
+    public function all($fields = ["id", "name"])
     {
         $this->queryParams = '';
         return $this->get($fields);
     }
 
-    public function get($fields = ["Id", "Name"])
+    public function get($fields = ["id", "name"])
     {
-        $attributes = collect($this->api->get(static::RESOURCE_NAME, $fields, $this->queryParams)["records"]);
-        return $attributes->map(function ($data) {
+        $items = collect($this->api->get(static::RESOURCE_NAME, $fields, $this->queryParams)["\$items"]);
+        return $items->map(function ($data) {
             return new static($this->api, $data);
         });
     }
 
     public function where($query)
     {
-        $this->queryParams .= "+AND+" . str_replace(' ', '+', $query);
+        $this->queryParams .= $query;
         return $this;
     }
 
     public function count()
     {
-        return $this->api->get(static::RESOURCE_NAME)["totalSize"];
+        return $this->api->get(static::RESOURCE_NAME)["\$total"];
     }
 
     public function countWithFields()
@@ -86,22 +87,12 @@ class SObject
         );
     }
 
-    public function findByUID($uid)
-    {
-        if (! $uid) {
-            return new static($this->api);
-        }
-        return new static($this->api,
-            $this->api->findByUID(static::RESOURCE_NAME, $uid)['records'][0]
-        );
-    }
-
     /**
      * @return SObject
      */
     public function create()
     {
-        $this->Id = $this->api->post(static::RESOURCE_NAME, $this->validate());
+        $this->id = $this->api->post(static::RESOURCE_NAME, $this->validate());
         return $this;
     }
 
@@ -112,13 +103,13 @@ class SObject
     public function update($attributes)
     {
         $this->attributes = $this->attributes->merge($attributes);
-        $this->api->patch(static::RESOURCE_NAME, $this->Id, $this->validate(collect($attributes), false));
+        $this->api->patch(static::RESOURCE_NAME, $this->id, $this->validate(collect($attributes), false));
         return $this;
     }
 
     public function destroy()
     {
-        $this->api->delete(static::RESOURCE_NAME, $this->Id);
+        $this->api->delete(static::RESOURCE_NAME, $this->id);
     }
 
     public function __get($name)

@@ -2,13 +2,15 @@
 
 namespace RevoSystems\SageOne\SObjects;
 
+use RevoSystems\SageOne\Validators\Validator;
 use RevoSystems\SageOne\SObject;
 
 class Contact extends SObject
 {
     const RESOURCE_NAME = "contacts";
 
-    protected $tag      = ["UID" => 'Customer', "Object" => "s2cor__Account__c"];
+    protected $tag      = ["UID" => 'contact'];
+
     protected $fields   = [
         "legacy_id"                         => ["required" => false, "type" => "(int32)"            ],
         "id"                                => ["required" => false, "type" => "string()"           ],
