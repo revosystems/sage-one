@@ -26,18 +26,18 @@ class SageOneContactsTest extends SageOneBaseTest
             "name"             => "Jordi",
             "reference"        => str_random(10),
             "contact_type_ids" => ["Customer"],
-//            "main_address"      => [
-//                "address_type" =>[
-//                    "id" => "DELIVERY",
+            "main_address"      => [
+                "address_type" =>[
+                    "id" => "DELIVERY",
 //                    "displayed_as" => "Delivery",
 //                    "\$path" => "/address_types/DELIVERY",
-//                ],
-//                "name" => "Main Address",
-//                "address_line_1"=> null,
-//                "address_line_2"=> null,
-//                "city"=> null,
-//                "region"=> null,
-//                "postal_code"=> null,
+                ],
+                "name" => "Main Address",
+                "address_line_1"=> "Main Address First line",
+                "address_line_2"=> "Main Address Second line",
+                "city"=> "Main Address City",
+                "region"=> "Main Address Region",
+                "postal_code"=> "99999",
 //                "country" => [
 //                    "id"  => "GB",
 //                    "displayed_as"  => "United Kingdom (GB)",
@@ -48,10 +48,9 @@ class SageOneContactsTest extends SageOneBaseTest
 //                    "displayed_as"  => "Other",
 //                    "\$path"  => "/country_groups/ALL",
 //                ],
-//                "is_main_address"   => true,
-//                "created_at"        => "2018-01-26T08:50:03Z",
-//                "updated_at"        => "2018-01-26T08:50:03Z",
-//            ], "delivery_address" => [],
+                "is_main_address"   => true,
+            ],
+//              "delivery_address" => [],
         ]))->create();
 
         $this->assertNotFalse($this->object->id);
