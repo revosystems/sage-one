@@ -22,14 +22,14 @@ abstract class SageOneBaseTest extends TestCase
     public function getSageApi()
     {
         if (! $this->api) {
-            $auth = new Auth(getenv('CLIENT_ID'), getenv('CLIENT_SECRET'));
+            $auth = new Auth(getenv('SAGE_ONE_CLIENT_ID'), getenv('SAGE_ONE_CLIENT_SECRET'));
             $auth->setAuthKeys([
                 "access_token"      => getenv('TEST_ACCESS_TOKEN'),
                 "refresh_token"     => getenv('TEST_REFRESH_TOKEN'),
             ], [
                 "country"           => getenv('TEST_COUNTRY'),
                 "resource_owner_id" => getenv('TEST_RESOURCE_OWNER_ID'),
-                "subscription_id"   => getenv('SAGE_SUBSCRIPTION_ID'),
+                "subscription_id"   => getenv('SAGE_ONE_SUBSCRIPTION_ID'),
             ]);
             $this->api = new Api($auth);
         }
@@ -40,6 +40,9 @@ abstract class SageOneBaseTest extends TestCase
     {
         if ($this->object) {
             $this->object->destroy();
+        }
+        if ($this->api->auth->access_token != getenv('TEST_ACCESS_TOKEN')) {
+            dd("UPDATE .env tokens to access_token: {$this->api->auth->access_token} and refresh_token: {$this->api->auth->refresh_token}");
         }
         parent::tearDown();
     }

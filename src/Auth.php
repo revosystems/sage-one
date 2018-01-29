@@ -26,7 +26,7 @@ class Auth extends \RevoSystems\SageApi\Auth
 
     public function loginCallback($redirect_uri, $code)
     {
-        $this->country = request('country');
+        $this->country = request('country', 'GB');
         $this->setTokenUrl();
         return parent::loginCallback($redirect_uri, $code);
     }
