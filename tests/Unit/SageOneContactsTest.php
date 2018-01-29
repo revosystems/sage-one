@@ -23,39 +23,23 @@ class SageOneContactsTest extends SageOneBaseTest
         $contacts_count  = $contactResource->count();
 
         $this->object = (new Contact($this->api, [
-            "name"             => "Jordi",
-            "reference"        => str_random(10),
-            "contact_type_ids" => ["Customer"],
+            "name"              => "Jordi",
+            "reference"         => str_random(10),
+            "contact_type_ids"  => ["Customer"],
             "main_address"      => [
-                "address_type" =>[
-                    "id" => "DELIVERY",
-//                    "displayed_as" => "Delivery",
-//                    "\$path" => "/address_types/DELIVERY",
-                ],
-                "name" => "Main Address",
-                "address_line_1"=> "Main Address First line",
-                "address_line_2"=> "Main Address Second line",
-                "city"=> "Main Address City",
-                "region"=> "Main Address Region",
-                "postal_code"=> "99999",
-//                "country" => [
-//                    "id"  => "GB",
-//                    "displayed_as"  => "United Kingdom (GB)",
-//                    "\$path"  => "/countries/GB",
-//                ],
-//                "country_group" => [
-//                    "id"  => "ALL",
-//                    "displayed_as"  => "Other",
-//                    "\$path"  => "/country_groups/ALL",
-//                ],
+                "address_type" => ["id" => "DELIVERY"],
+                "name"          => "Main Address",
+                "address_line_1"=> "C/Església nº 18",
+                "address_line_2"=> "",
+                "city"          => "Sant Salvador de Guardiola",
+                "region"        => "Barcelona",
+                "postal_code"   => "08253",
                 "is_main_address"   => true,
             ],
-//              "delivery_address" => [],
         ]))->create();
 
         $this->assertNotFalse($this->object->id);
         $this->assertEquals($contacts_count + 1, $contactResource->count());
-        // dd($this->api->log);
     }
 
     /** @test */
@@ -63,7 +47,7 @@ class SageOneContactsTest extends SageOneBaseTest
     {
         $contactResource = (new Contact($this->api));
         $this->object    = (new Contact($this->api, [
-            "name" => "Jordi",
+            "name"             => "Jordi",
             "contact_type_ids" => ["Customer"],
         ]))->create();
         $contacts_count  = $contactResource->count();
@@ -83,7 +67,7 @@ class SageOneContactsTest extends SageOneBaseTest
     public function can_get_sage_contacts()
     {
         $this->object = (new Contact($this->api, [
-            "name" => "Jordi",
+            "name"             => "Jordi",
             "contact_type_ids" => ["Customer"],
         ]))->create();
 
@@ -94,7 +78,7 @@ class SageOneContactsTest extends SageOneBaseTest
     public function can_see_a_sage_contact()
     {
         $this->object = (new Contact($this->api, [
-            "name" => "Jordi",
+            "name"             => "Jordi",
             "contact_type_ids" => ["Customer"],
         ]))->create();
 
@@ -108,7 +92,7 @@ class SageOneContactsTest extends SageOneBaseTest
     public function can_delete_sage_contact()
     {
         $this->object = (new Contact($this->api, [
-            "name" => "Jordi",
+            "name"             => "Jordi",
             "contact_type_ids" => ["Customer"],
         ]))->create();
         $contacts_count = (new Contact($this->api))->count();

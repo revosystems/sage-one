@@ -2,7 +2,7 @@
 
 namespace RevoSystems\SageOne;
 
-use Zttp\Zttp;
+use Zttp\ZttpResponse;
 
 class Api extends \RevoSystems\SageApi\Api
 {
@@ -20,8 +20,7 @@ class Api extends \RevoSystems\SageApi\Api
 
     public function get($resource, $fields = ["id", "name"], $query = '')
     {
-        return Zttp::withHeaders($this->auth->getAuthHeaders())
-            ->get($this->urlForQueries() . "{$resource}?{$query}")
-            ->json();
+        $response = $this->call('get', $this->urlForQueries() . "{$resource}{$query}");
+        return $response instanceof ZttpResponse ? $response->json() : null;
     }
 }
