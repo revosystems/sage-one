@@ -39,7 +39,7 @@ class SObject
 
     public function validate($attributes = false, $withRequired = true)
     {
-        return [$this->tag["UID"] => (new Validator($this->fields, $attributes ? : $this->attributes))->validate($withRequired)->toArray()];
+        return [str_singular(static::RESOURCE_NAME) => (new Validator($this->fields, $attributes ? : $this->attributes))->validate($withRequired)->toArray()];
     }
 
     public function all($fields = ["id", "name"])

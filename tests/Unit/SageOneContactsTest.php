@@ -21,24 +21,32 @@ class SageOneContactsTest extends SageOneBaseTest
     {
         $contactResource = (new Contact($this->api));
         $contacts_count  = $contactResource->count();
+        $reference = str_random(10);
 
         $this->object = (new Contact($this->api, [
             "name"              => "Jordi",
-            "reference"         => str_random(10),
+            "reference"         => $reference,
             "contact_type_ids"  => ["Customer"],
             "main_address"      => [
-                "address_type" => ["id" => "DELIVERY"],
-                "name"          => "Main Address",
-                "address_line_1"=> "C/Església nº 18",
-                "address_line_2"=> "",
-                "city"          => "Sant Salvador de Guardiola",
-                "region"        => "Barcelona",
-                "postal_code"   => "08253",
-                "is_main_address"   => true,
-            ],
+                "name"              => "Main Address",
+                "address_line_1"    => "C/Església nº 18",
+                "address_line_2"    => "",
+                "city"              => "Sant Salvador de Guardiola",
+                "region"            => "Barcelona",
+                "postal_code"       => "08253",
+                "country_id"        => "ES"
+            ], "main_contact_person"   => [
+                "name"      => "Contact name",
+                "telephone" => "Contact phone",
+                "mobile"    => "Contact mobile",
+                "email"     => "email@revo.works",
+            ]
         ]))->create();
 
         $this->assertNotFalse($this->object->id);
+        $this->assertEquals("Jordi", $this->object->name);
+        $this->assertEquals($reference, $this->object->reference);
+        $this->assertArraySubset(["name" => "Main Address", "country_id" => "ES"], $this->object->main_address);
         $this->assertEquals($contacts_count + 1, $contactResource->count());
     }
 
