@@ -20,6 +20,7 @@ class SageOneContactsTest extends SageOneBaseTest
     public function can_create_sage_contact()
     {
         $contactResource = (new Contact($this->api));
+
         $contacts_count  = $contactResource->count();
         $reference = str_random(10);
 

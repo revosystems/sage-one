@@ -31,7 +31,7 @@ abstract class SageOneBaseTest extends TestCase
                 "resource_owner_id" => getenv('TEST_RESOURCE_OWNER_ID'),
                 "subscription_id"   => getenv('SAGE_ONE_SUBSCRIPTION_ID'),
             ]);
-            $this->api = new Api($auth);
+            $this->api = new Api($auth, 'ES');
         }
         return $this->api;
     }
