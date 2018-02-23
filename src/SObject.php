@@ -39,7 +39,7 @@ class SObject
 
     public function validate($attributes = false, $withRequired = true)
     {
-        return [str_singular(static::RESOURCE_NAME) => (new Validator($this->fields, $attributes ? : $this->attributes))->validate($withRequired)->toArray()];
+        return (new Validator($this->fields, $attributes ? : $this->attributes))->validate($withRequired);
     }
 
     public function all($fields = ["id", "name"])
@@ -92,7 +92,7 @@ class SObject
      */
     public function create()
     {
-        $this->id = $this->api->post(static::RESOURCE_NAME, $this->validate());
+        $this->id = $this->api->post(static::RESOURCE_NAME, [str_singular(static::RESOURCE_NAME) => $this->validate()->toArray()]);
         return $this;
     }
 
@@ -103,7 +103,7 @@ class SObject
     public function update($attributes)
     {
         $this->attributes = $this->attributes->merge($attributes);
-        $this->api->patch(static::RESOURCE_NAME, $this->id, $this->validate(collect($attributes), false));
+        $this->api->patch(static::RESOURCE_NAME, $this->id, [str_singular(static::RESOURCE_NAME) => $this->validate(collect($attributes), false)]);
         return $this;
     }
 

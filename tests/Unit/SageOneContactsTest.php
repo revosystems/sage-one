@@ -6,16 +6,6 @@ use RevoSystems\SageOne\SObjects\Contact;
 
 class SageOneContactsTest extends SageOneBaseTest
 {
-    ///** @test */
-    public function can_delete_all_sage_contacts()
-    {
-        (new Contact($this->api))->all()->first();
-        (new Contact($this->api))->all()->each(function ($contact) {
-            $contact->destroy();
-        });
-        $this->object = null;
-    }
-
     /** @test */
     public function can_create_sage_contact()
     {
@@ -65,6 +55,7 @@ class SageOneContactsTest extends SageOneBaseTest
             "name" => "Joan",
         ]);
 
+        var_dump($this->api->log);
         $this->assertNotFalse($this->object->id);
         $this->assertEquals("Joan", $this->object->name);
         $contact = (new Contact($this->api))->find($this->object->id);
@@ -97,7 +88,6 @@ class SageOneContactsTest extends SageOneBaseTest
         $this->assertEquals('Jordi', $contact->name);
     }
 
-    /** @test */
     public function can_delete_sage_contact()
     {
         $this->object = (new Contact($this->api, [
@@ -110,6 +100,16 @@ class SageOneContactsTest extends SageOneBaseTest
         $actual_contacts_count =  (new Contact($this->api))->count();
 
         $this->assertEquals($contacts_count - 1, $actual_contacts_count);
+        $this->object = null;
+    }
+
+    ///** @test */
+    public function do_not_run_if_run_can_delete_all_sage_contacts()
+    {
+        (new Contact($this->api))->all()->first();
+        (new Contact($this->api))->all()->each(function ($contact) {
+            $contact->destroy();
+        });
         $this->object = null;
     }
 }
