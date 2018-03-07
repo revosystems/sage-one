@@ -16,7 +16,7 @@ class SObject
     public $id;
 
     /**
-     * SageLiveSObject constructor.
+     * SageOneSObject constructor.
      * @param Api $api
      * @param null $json
      */
@@ -42,15 +42,15 @@ class SObject
         return (new Validator($this->fields, $attributes ? : $this->attributes))->validate($withRequired);
     }
 
-    public function all($fields = ["id", "name"])
+    public function all()
     {
         $this->queryParams = '';
-        return $this->get($fields);
+        return $this->get();
     }
 
-    public function get($fields = ["id", "name"])
+    public function get()
     {
-        $items = collect($this->api->get(static::RESOURCE_NAME, $fields, $this->queryParams)["\$items"]);
+        $items = collect($this->api->get(static::RESOURCE_NAME, $this->queryParams)["\$items"]);
         return $items->map(function ($data) {
             return new static($this->api, $data);
         });
@@ -58,7 +58,7 @@ class SObject
 
     public function where($query)
     {
-        $this->queryParams .= $query;
+        $this->queryParams .= $query . "&";
         return $this;
     }
 

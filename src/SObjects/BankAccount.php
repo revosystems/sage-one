@@ -4,7 +4,7 @@ namespace RevoSystems\SageOne\SObjects;
 
 use RevoSystems\SageOne\SObject;
 
-class LedgerAccount extends SObject
+class BankAccount extends SObject
 {
-    const RESOURCE_NAME = "ledger_accounts";
+    const RESOURCE_NAME = "bank_accounts";
 }

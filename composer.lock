@@ -844,16 +844,16 @@
         },
         {
             "name": "revosystems/sage-api",
-            "version": "v1.1",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/revosystems/sage-api.git",
-                "reference": "2c587b2cb53827a9ffe89ea053800b289c266216"
+                "reference": "e12e83a42d99d1ada8ed5ef4d9e20a8ea8a0d801"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/revosystems/sage-api/zipball/2c587b2cb53827a9ffe89ea053800b289c266216",
-                "reference": "2c587b2cb53827a9ffe89ea053800b289c266216",
+                "url": "https://api.github.com/repos/revosystems/sage-api/zipball/e12e83a42d99d1ada8ed5ef4d9e20a8ea8a0d801",
+                "reference": "e12e83a42d99d1ada8ed5ef4d9e20a8ea8a0d801",
                 "shasum": ""
             },
             "require": {
@@ -881,7 +881,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2018-02-07T12:06:37+00:00"
+            "time": "2018-03-08T07:24:57+00:00"
         },
         {
             "name": "symfony/debug",

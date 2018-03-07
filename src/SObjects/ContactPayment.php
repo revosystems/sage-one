@@ -14,5 +14,6 @@ class ContactPayment extends SObject
         "bank_account_id"       => ["required" => true, "type" => "object"               ],
         "date"                  => ["required" => true, "type" => "object"               ],
         "total_amount"          => ["required" => true, "type" => "object"               ],
+        "allocated_artefacts"   => ["required" => true, "type" => "object"               ],
     ];
 }

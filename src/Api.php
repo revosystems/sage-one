@@ -34,9 +34,9 @@ class Api extends \RevoSystems\SageApi\Api
         return "https://api.columbus.sage.com/{$this->country}/sageone/accounts/v3/";
     }
 
-    public function get($resource, $fields = ["id", "name"], $query = '')
+    public function get($resource, $query = '', $fields = [])
     {
-        $response = $this->call('get', $this->urlForQueries() . "{$resource}{$query}");
+        $response = $this->call('get', $this->urlForQueries() . "{$resource}?{$query}");
         return $response instanceof ZttpResponse ? $response->json() : null;
     }
 }
