@@ -17,7 +17,7 @@ class SageOneContactsTest extends SageOneBaseTest
         $this->object = (new Contact($this->api, [
             "name"              => "Jordi",
             "reference"         => $reference,
-            "contact_type_ids"  => ["Customer"],
+            "contact_type_ids"  => ["CUSTOMER"],
             "main_address"      => [
                 "name"              => "Main Address",
                 "address_line_1"    => "C/Església nº 18",
@@ -47,7 +47,7 @@ class SageOneContactsTest extends SageOneBaseTest
         $contactResource = (new Contact($this->api));
         $this->object    = (new Contact($this->api, [
             "name"             => "Jordi",
-            "contact_type_ids" => ["Customer"],
+            "contact_type_ids" => ["CUSTOMER"],
         ]))->create();
         $contacts_count  = $contactResource->count();
 
@@ -68,7 +68,7 @@ class SageOneContactsTest extends SageOneBaseTest
     {
         $this->object = (new Contact($this->api, [
             "name"             => "Jordi",
-            "contact_type_ids" => ["Customer"],
+            "contact_type_ids" => ["CUSTOMER"],
         ]))->create();
 
         $this->assertGreaterThanOrEqual(1, (new Contact($this->api))->count());
@@ -79,7 +79,7 @@ class SageOneContactsTest extends SageOneBaseTest
     {
         $this->object = (new Contact($this->api, [
             "name"             => "Jordi",
-            "contact_type_ids" => ["Customer"],
+            "contact_type_ids" => ["CUSTOMER"],
         ]))->create();
 
         $contact = (new Contact($this->api))->find($this->object->id);
@@ -92,7 +92,7 @@ class SageOneContactsTest extends SageOneBaseTest
     {
         $this->object = (new Contact($this->api, [
             "name"             => "Jordi",
-            "contact_type_ids" => ["Customer"],
+            "contact_type_ids" => ["CUSTOMER"],
         ]))->create();
         $contacts_count = (new Contact($this->api))->count();
 
@@ -103,7 +103,7 @@ class SageOneContactsTest extends SageOneBaseTest
         $this->object = null;
     }
 
-    ///** @test */
+    /** @test */
     public function do_not_run_if_run_can_delete_all_sage_contacts()
     {
         (new Contact($this->api))->all()->first();

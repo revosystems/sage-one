@@ -27,7 +27,7 @@ class SageOneInvoicesTest extends SageOneBaseTest
     {
         $this->contact    = (new Contact($this->api, [
             "name"             => "Jordi",
-            "contact_type_ids" => ["Customer"],
+            "contact_type_ids" => ["CUSTOMER"],
         ]))->create();
 
         $ledgerAccount = (new LedgerAccount($this->api))
