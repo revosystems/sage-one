@@ -2,6 +2,7 @@
 
 namespace RevoSystems\SageOne;
 
+use Carbon\Carbon;
 use RevoSystems\SageOne\Validators\Validator;
 use RevoSystems\SageApi\Api;
 
@@ -50,31 +51,31 @@ class SObject
 
     public function get()
     {
-        $items = collect($this->api->get(static::RESOURCE_NAME, $this->queryParams)["\$items"]);
+        $data = $this->api->get(static::RESOURCE_NAME, $this->queryParams);
+        $items = collect($data["\$items"] ?? []);
+        if ($data["\$next"] ?? false) {
+            $items = $this->getPaginatedItems($items, $data["\$next"]);
+        }
         return $items->map(function ($data) {
             return new static($this->api, $data);
         });
     }
 
-    public function where($query)
+    public function where($field, $condition)
     {
-        $this->queryParams .= $query . "&";
+        $this->queryParams .= "{$field}={$condition}&";
+        return $this;
+    }
+
+    public function whereDate($field, $date)
+    {
+        $this->queryParams .= "{$field}=" . $this->toIso8601String($date)  . "&";
         return $this;
     }
 
     public function count()
     {
         return $this->api->get(static::RESOURCE_NAME)["\$total"];
-    }
-
-    public function countWithFields()
-    {
-        $resource = $this->api->get(static::RESOURCE_NAME, $this->fields);
-        try {
-            return $resource["totalSize"];
-        } catch (\Exception $e) {
-            dd(static::RESOURCE_NAME, $resource);
-        }
     }
 
     public function find($id)
@@ -118,5 +119,20 @@ class SObject
             return $this->attributes[$name];
         }
         return null;
+    }
+
+    private function getPaginatedItems($items, $nextPage)
+    {
+        $data = $this->api->get($nextPage);
+        $items = $items->concat($data["\$items"] ?? []);
+        if ($data && $data["\$next"]) {
+            return $this->getPaginatedItems($items, $data["\$next"]);
+        }
+        return $items;
+    }
+
+    private function toIso8601String(Carbon $date)
+    {
+        return str_replace("+", "%2B", $date->toAtomString());
     }
 }
